@@ -3,40 +3,19 @@
 /* https://github.com/angular/protractor/blob/master/docs/toc.md */
 
 describe('my app', function() {
+  it('should add a todo', function() {
+    browser.get('https://angularjs.org');
 
+    element(by.model('todoList.todoText')).sendKeys('write first protractor test');
+    element(by.css('[value="add"]')).click();
 
-  it('should automatically redirect to /view1 when location hash/fragment is empty', function() {
-    browser.get('index.html');
-    expect(browser.getLocationAbsUrl()).toMatch("/view1");
-  });
+    var todoList = element.all(by.repeater('todo in todoList.todos'));
+    expect(todoList.count()).toEqual(3);
+    expect(todoList.get(2).getText()).toEqual('write first protractor test');
 
-
-  describe('view1', function() {
-
-    beforeEach(function() {
-      browser.get('index.html#/view1');
-    });
-
-
-    it('should render view1 when user navigates to /view1', function() {
-      expect(element.all(by.css('[ng-view] p')).first().getText()).
-        toMatch(/partial for view 1/);
-    });
-
-  });
-
-
-  describe('view2', function() {
-
-    beforeEach(function() {
-      browser.get('index.html#/view2');
-    });
-
-
-    it('should render view2 when user navigates to /view2', function() {
-      expect(element.all(by.css('[ng-view] p')).first().getText()).
-        toMatch(/partial for view 2/);
-    });
-
+    // You wrote your first test, cross it off the list
+    todoList.get(2).element(by.css('input')).click();
+    var completedAmount = element.all(by.css('.done-true'));
+    expect(completedAmount.count()).toEqual(2);
   });
 });
