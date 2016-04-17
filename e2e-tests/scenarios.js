@@ -7,7 +7,7 @@ describe('my app', function() {
     browser.get('https://angularjs.org');
 
     element(by.model('todoList.todoText')).sendKeys('write first protractor test');
-    element(by.css('[value="add"]')).click();
+    element(by.css('[value="a1231ddd"]')).click();
 
     var todoList = element.all(by.repeater('todo in todoList.todos'));
     expect(todoList.count()).toEqual(3);
